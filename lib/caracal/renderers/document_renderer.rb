@@ -114,9 +114,28 @@ module Caracal
           end
           xml.send 'w:r', run_options do
             xml.send 'w:drawing' do
-              xml.send 'wp:inline', { distR: model.formatted_right, distT: model.formatted_top, distB: model.formatted_bottom, distL: model.formatted_left } do
+              xml.send 'wp:anchor', {
+                  distR: model.formatted_right,
+                  distT: model.formatted_top,
+                  distB: model.formatted_bottom,
+                  distL: model.formatted_left,
+                  simplePos: "0",
+                  relativeHeight: "0",
+                  behindDoc: "0",
+                  locked: "0",
+                  layoutInCell:"1",
+                  allowOverlap: "1"
+                   } do
+                xml.send 'wp:simplePos', { x: "0", y: "0" }
+                xml.send 'wp:positionH', { relativeFrom: "column" } do
+                  xml.send 'wp:posOffset', 0
+                end
+                xml.send 'wp:positionV', { relativeFrom: "column" } do
+                  xml.send 'wp:posOffset', 0
+                end
                 xml.send 'wp:extent', { cx: model.formatted_width, cy: model.formatted_height }
                 xml.send 'wp:effectExtent', { t: 0, b: 0, r: 0, l: 0 }
+                xml.send 'wp:wrapSquare', { wrapText: "bothSides" }
                 xml.send 'wp:docPr', { id: rel_id, name: rel_name }
                 xml.send 'a:graphic' do
                   xml.send 'a:graphicData', { uri: 'http://schemas.openxmlformats.org/drawingml/2006/picture' } do
